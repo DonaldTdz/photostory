@@ -1,0 +1,52 @@
+{
+    "app": {
+        "name": "Alain",
+        "description": "Ng-zorro admin panel front-end framework"
+    },
+    "user": {
+        "name": "Admin",
+        "avatar": "./assets/img/zorro.svg",
+        "email": "tangdezou@qq.com"
+    },
+    "menu": [{
+        "text": "主导航",
+        "translate": "main_navigation",
+        "group": true,
+        "children": [{
+            "text": "主页",
+            "translate": "home",
+            "link": "/home",
+            "icon": "fa fa-home"
+        }]
+    }, {
+        "text": "系统",
+        "translate": "system",
+        "group": true,
+        "children": [{
+            "text": "系统管理",
+            "translate": "system-user",
+            "link": "/users",
+            "icon": "fa fa-gears",
+            "acl": "role-a",
+            "children": [{
+                "text": "用户管理",
+                "link": "/users",
+                "translate": "users"
+            }, {
+                "text": "角色管理",
+                "link": "/roles",
+                "translate": "roles"
+            }, {
+                "text": "租户管理",
+                "link": "/tenants",
+                "translate": "tenants"
+            }]
+        },
+        {
+            "text": "关于",
+            "translate": "about",
+            "link": "/about",
+            "icon": "fa fa-info-circle"
+        }]
+    }]
+}

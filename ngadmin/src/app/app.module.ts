@@ -9,7 +9,8 @@ import { LocalStorageService } from 'angular-web-storage';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { RoutesModule } from './routes/routes.module';
+//import { RoutesModule } from './routes/routes.module';
+import { PagesModule } from './pages/pages.module';
 import { LayoutModule } from './layout/layout.module';
 import { StartupService } from './core/services/startup.service';
 import { MenuService } from './core/services/menu.service';
@@ -40,7 +41,8 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         SharedModule.forRoot(),
         CoreModule,
         LayoutModule,
-        RoutesModule,
+        //RoutesModule,
+        PagesModule,
         // i18n
         TranslateModule.forRoot({
             loader: {

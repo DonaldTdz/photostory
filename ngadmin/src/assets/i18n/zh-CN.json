@@ -90,5 +90,11 @@
     "pro-user": "账户",
     "pro-login": "登录",
     "pro-register": "注册",
-    "pro-register-result": "注册结果"
+    "pro-register-result": "注册结果",
+    "users": "用户管理",
+    "system": "系统",
+    "system-user": "系统管理",
+    "roles": "角色管理",
+    "tenants": "租户管理",
+    "about": "关于"
 }
