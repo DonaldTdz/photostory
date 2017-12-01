@@ -90,5 +90,11 @@
     "pro-user": "Account",
     "pro-login": "Login",
     "pro-register": "Register",
-    "pro-register-result": "Register Result"
+    "pro-register-result": "Register Result",
+    "users": "User Management",
+    "system": "System",
+    "system-user": "Management",
+    "roles": "Role Management",
+    "tenants": "Tenant Management",
+    "about": "About"
 }

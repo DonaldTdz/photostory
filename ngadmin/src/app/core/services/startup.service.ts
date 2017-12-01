@@ -29,7 +29,7 @@ export class StartupService {
         // only works with promises
         // https://github.com/angular/angular/issues/15088
         return new Promise((resolve, reject) => {
-            this.httpClient.get('assets/app-data.json')
+            this.httpClient.get('assets/abp-data.json')
                            .subscribe((res: any) => {
                                 this.settingService.setApp(res.app);
                                 this.settingService.setUser(res.user);
