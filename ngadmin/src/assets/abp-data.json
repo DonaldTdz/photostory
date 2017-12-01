@@ -15,7 +15,7 @@
         "children": [{
             "text": "主页",
             "translate": "home",
-            "link": "/home",
+            "link": "/pages/home",
             "icon": "fa fa-home"
         }]
     }, {
@@ -25,27 +25,26 @@
         "children": [{
             "text": "系统管理",
             "translate": "system-user",
-            "link": "/users",
+            "link": "/pages",
             "icon": "fa fa-gears",
-            "acl": "role-a",
             "children": [{
                 "text": "用户管理",
-                "link": "/users",
+                "link": "/pages/users",
                 "translate": "users"
             }, {
                 "text": "角色管理",
-                "link": "/roles",
+                "link": "/pages/roles",
                 "translate": "roles"
             }, {
                 "text": "租户管理",
-                "link": "/tenants",
+                "link": "/pages/tenants",
                 "translate": "tenants"
             }]
         },
         {
             "text": "关于",
             "translate": "about",
-            "link": "/about",
+            "link": "/pages/about",
             "icon": "fa fa-info-circle"
         }]
     }]

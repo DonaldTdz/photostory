@@ -27,6 +27,7 @@ export class SidebarNavComponent implements OnInit {
     }
 
     ngOnInit() {
+        //console.table(this.menuSrv.menus);
         this.menuSrv.setDefault(this.router.url);
         this.genFloatingContainer();
     }

@@ -107,7 +107,7 @@ export class MenuService {
             if (item.shortcut === true && (item.link || item.externalLink))
                 shortcuts.push(item);
         });
-
+        
         this.loadShortcut(shortcuts);
     }
 
