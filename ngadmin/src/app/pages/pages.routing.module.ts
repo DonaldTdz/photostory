@@ -10,30 +10,31 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { AboutComponent } from './about/about.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'pages', pathMatch: 'full' },
+    //{ path: '', redirectTo: 'pages', pathMatch: 'full' },
     {
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', redirectTo: 'pages/home', pathMatch: 'full' },
-            { path: 'pages', redirectTo: 'pages/home', pathMatch: 'full' },
-            { path: 'pages/home', component: HomeComponent, data: { translate: 'home' } },
-            { path: 'pages/users', component: UsersComponent, data: { translate: 'users' } },
-            { path: 'pages/roles', component: RolesComponent, data: { translate: 'roles' } },
-            { path: 'pages/tenants', component: TenantsComponent, data: { translate: 'tenants' } },
-            { path: 'pages/about', component: AboutComponent, data: { translate: 'about' } }
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', component: HomeComponent, data: { translate: 'home' } },
+            { path: 'users', component: UsersComponent, data: { translate: 'users' } },
+            { path: 'roles', component: RolesComponent, data: { translate: 'roles' } },
+            { path: 'tenants', component: TenantsComponent, data: { translate: 'tenants' } },
+            { path: 'about', component: AboutComponent, data: { translate: 'about' } }
         ]
-    },
+    }
+    /*,
     {
         path: 'account',
         loadChildren: '../account/account.module#AccountModule', //Lazy load account module
         data: { preload: true }
     },
-    { path: '**', redirectTo: 'pages' }
+    { path: '**', redirectTo: 'pages' }*/
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    //imports: [RouterModule.forRoot(routes, { useHash: true })],
+    imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
     providers: []
 })

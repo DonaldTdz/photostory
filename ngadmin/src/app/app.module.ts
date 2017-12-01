@@ -10,8 +10,9 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 //import { RoutesModule } from './routes/routes.module';
-import { PagesModule } from './pages/pages.module';
-import { LayoutModule } from './layout/layout.module';
+//import { PagesModule } from './pages/pages.module';
+//import { LayoutModule } from './layout/layout.module';
+import { AppRoutingModule } from './app.routing.module';
 import { StartupService } from './core/services/startup.service';
 import { MenuService } from './core/services/menu.service';
 import { TranslatorService } from './core/translator/translator.service';
@@ -40,9 +41,10 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         BrowserAnimationsModule,
         SharedModule.forRoot(),
         CoreModule,
-        LayoutModule,
+        //LayoutModule,
+        AppRoutingModule,
         //RoutesModule,
-        PagesModule,
+        //PagesModule,
         // i18n
         TranslateModule.forRoot({
             loader: {
