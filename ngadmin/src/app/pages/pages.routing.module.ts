@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AppRouteGuard } from '@shared/auth/auth-route-guard';
+
 import { LayoutComponent } from '../layout/layout.component';
 import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.component';
 import { HomeComponent } from './home/home.component';
@@ -16,10 +18,10 @@ export const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', component: HomeComponent, data: { translate: 'home' } },
-            { path: 'users', component: UsersComponent, data: { translate: 'users' } },
-            { path: 'roles', component: RolesComponent, data: { translate: 'roles' } },
-            { path: 'tenants', component: TenantsComponent, data: { translate: 'tenants' } },
+            { path: 'home', component: HomeComponent, data: { translate: 'home' } ,  canActivate: [AppRouteGuard] },
+            { path: 'users', component: UsersComponent, data: { translate: 'users', permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
+            { path: 'roles', component: RolesComponent, data: { translate: 'roles', permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
+            { path: 'tenants', component: TenantsComponent, data: { translate: 'tenants', permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
             { path: 'about', component: AboutComponent, data: { translate: 'about' } }
         ]
     }

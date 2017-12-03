@@ -26,7 +26,7 @@ export class LoginComponent {
     if (this.valForm.valid) {
       console.log('Valid!');
       console.log(this.valForm.value);
-      this.router.navigate(['/app/home']);
+      this.router.navigate(['/pages/home']);
     }
   }
 }

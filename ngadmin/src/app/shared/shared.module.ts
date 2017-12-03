@@ -21,6 +21,12 @@ import { ModalHelper } from './helper/modal.helper';
 
 import { shared_entry_components, shared_components } from './components/index';
 
+//import { AbpModule } from '@abp/abp.module';
+
+import { AppSessionService } from './session/app-session.service';
+import { AppAuthService } from './auth/app-auth.service';
+import { AppRouteGuard } from './auth/auth-route-guard';
+
 const DIRECTIVES = [ DownFileDirective, ImageDirective, FixedBtnsDirective, ErrorCollectComponent];
 const PIPES = [MomentDatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 const HELPERS = [ ModalHelper ];
@@ -139,7 +145,8 @@ const ZORROMODULES = [
         NgZorroAntdExtraModule.forRoot(),
         // 第三方
         CountdownModule,
-        AngularWebStorageModule
+        AngularWebStorageModule//,
+        //AbpModule
     ],
     declarations: [...shared_components, ...DIRECTIVES, ...PIPES],
     providers: [ ...HELPERS ],
@@ -154,6 +161,7 @@ const ZORROMODULES = [
         // 第三方
         AngularWebStorageModule,
         CountdownModule,
+        //AbpModule,
         // 多语言
         TranslateModule,
         // 业务级
@@ -169,7 +177,10 @@ export class SharedModule {
             providers: [
                 // Services
                 NzNotificationService,
-                NzMessageService
+                NzMessageService,
+                AppSessionService,
+                AppAuthService,
+                AppRouteGuard
             ]
         };
     }
