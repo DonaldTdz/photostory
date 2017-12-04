@@ -8,7 +8,7 @@ import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocalStorageService } from 'angular-web-storage';
 
 import { CoreModule } from './core/core.module';
-//import { AbpModule, ABP_HTTP_PROVIDER } from '@abp/abp.module';
+import { AbpModule } from 'abp-ng2-module';
 import { SharedModule } from './shared/shared.module';
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { AppComponent } from './app.component';
@@ -49,7 +49,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        //AbpModule,
+        AbpModule,
         ServiceProxyModule,
         SharedModule.forRoot(),
         CoreModule,
