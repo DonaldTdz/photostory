@@ -10,6 +10,7 @@
       "node"
     ],
     "paths": {
+        "@abp/*": [ "../node_modules/abp-ng2-module/src/*" ],
         "@shared": [ "app/shared" ],
         "@shared/*": [ "app/shared/*" ],
         "@core": [ "app/core/" ],
