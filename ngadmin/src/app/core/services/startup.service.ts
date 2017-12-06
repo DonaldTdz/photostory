@@ -6,6 +6,9 @@ import { TranslatorService } from '../translator/translator.service';
 import { SettingsService } from './settings.service';
 import { ACLService } from '../acl/acl.service';
 import { TitleService } from '@core/services/title.service';
+import { AppSessionService } from '@shared/session/app-session.service';
+
+import { AppPreBootstrap } from './AppPreBootstrap';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
@@ -29,6 +32,18 @@ export class StartupService {
         // only works with promises
         // https://github.com/angular/angular/issues/15088
         return new Promise((resolve, reject) => {
+            AppPreBootstrap.run(() => {
+                var appSessionService: AppSessionService = this.injector.get(AppSessionService);
+                appSessionService.init().then(
+                  (result) => {
+                    resolve(result);
+                  },
+                  (err) => {
+                    reject(err);
+                  }
+                );
+            });
+            
             this.httpClient.get('assets/abp-data.json')
                            .subscribe((res: any) => {
                                 this.settingService.setApp(res.app);

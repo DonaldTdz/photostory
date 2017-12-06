@@ -1,23 +1,23 @@
 <div class="wrapper">
-    <div class="abs-center mt-lg width-lg">
+    <div #cardBody class="abs-center mt-lg width-lg">
         <nz-card [nzTitle]="nzTitle" [nzBordered]="false" class="ant-card__primary ant-card__title-img">
             <ng-template #nzTitle>
-                <div class="text-center"><img src="./assets/img/logo.svg" style="height:20px;"></div>
+                <div class="text-center" style="color:white; font-weight:bold;"><img src="./assets/images/logo.svg" style="height:20px;"> {{l("LogIn")}}</div>
             </ng-template>
-            <form nz-form [formGroup]="valForm" (ngSubmit)="submit()" role="form">
+            <form nz-form [formGroup]="valForm" #loginForm="ngForm" id="LoginForm" (ngSubmit)="login()" role="form">
                 <div nz-form-item>
-                    <div nz-form-control [nzValidateStatus]="valForm.controls.email">
-                        <nz-input formControlName="email" [nzPlaceHolder]="'邮箱'" [nzSize]="'large'">
+                    <div nz-form-control [nzValidateStatus]="valForm.controls.userNameOrEmailAddress">
+                        <nz-input formControlName="userNameOrEmailAddress" [nzPlaceHolder]="l('UserNameOrEmail')" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" [nzSize]="'large'">
                             <ng-template #suffix>
-                                <i class="anticon anticon-mail"></i>
+                                <i class="anticon anticon-user"></i>
                             </ng-template>
                         </nz-input>
-                        <div nz-form-explain *ngIf="valForm.controls.email.dirty&&valForm.controls.email.hasError('required')">邮箱必填</div>
+                        <div nz-form-explain *ngIf="valForm.controls.userNameOrEmailAddress.dirty&&valForm.controls.userNameOrEmailAddress.hasError('required')">请输入用户名或邮箱地址</div>
                     </div>
                 </div>
                 <div nz-form-item>
                     <div nz-form-control [nzValidateStatus]="valForm.controls.password">
-                        <nz-input formControlName="password" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
+                        <nz-input formControlName="password" [(ngModel)]="loginService.authenticateModel.password" [nzPlaceHolder]="'密码'" [nzType]="'password'" [nzSize]="'large'">
                             <ng-template #suffix>
                                 <i class="anticon anticon-lock"></i>
                             </ng-template>
@@ -27,36 +27,22 @@
                 </div>
                 <div nz-form-item nz-row>
                     <div nz-col [nzSpan]="12">
-                        <label nz-checkbox formControlName="remember_me">
-                            <span>记住密码</span>
+                        <label nz-checkbox [(ngModel)]="loginService.rememberMe" formControlName="rememberMe">
+                            <span>{{l("RememberMe")}}</span>
                         </label>
                     </div>
                     <div nz-col [nzSpan]="12" class="text-right">
-                        <a [routerLink]="['/forget']">忘记密码？</a>
+                        <a [routerLink]="['../register']" >{{l("Register")}}</a>
                     </div>
                 </div>
                 <div nz-form-item nz-row>
                     <div nz-col [nzSpan]="24">
-                        <button nz-button [disabled]="!valForm.valid" [nzType]="'primary'" [nzSize]="'large'" class="ant-btn__block">
+                        <button nz-button id="LoginButton" [disabled]="!valForm.valid" [nzType]="'primary'" [nzSize]="'large'" class="ant-btn__block">
                             <span>登录</span>
                         </button>
                     </div>
                 </div>
             </form>
-            <div nz-form-item nz-row>
-                <div nz-col [nzSpan]="24" class="text-center">或</div>
-            </div>
-            <div nz-row>
-                <div nz-col [nzSpan]="24">
-                    <button nz-button [routerLink]="['/register']" [nzType]="'default'" [nzSize]="'large'" class="ant-btn__block">
-                        <span>立即注册</span>
-                    </button>
-                </div>
-            </div>
-        </nz-card>
-        <div class="p-lg text-center text-sm">
-            &copy; {{ settings.app.year }} - {{ settings.app.name }}
-            <br> {{ settings.app.description }}
-        </div>
+        </nz-card>    
     </div>
 </div>

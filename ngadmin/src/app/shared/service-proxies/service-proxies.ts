@@ -20,7 +20,7 @@ import { Http, Headers, ResponseContentType, Response } from '@angular/http';
 
 import * as moment from 'moment';
 
-export const API_BASE_URL = new InjectionToken('API_BASE_URL');
+export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
 export class AccountServiceProxy {

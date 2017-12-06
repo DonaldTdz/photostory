@@ -38,8 +38,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
 }
 
-export function StartupServiceFactory(startupService: StartupService): Function {
+export function StartupServiceFactory(injector: Injector, startupService: StartupService): Function {
     return () => startupService.load();
+}
+
+export function getCurrentLanguage(): string {
+    return abp.localization.currentLanguage.name;
 }
 
 @NgModule({
@@ -67,7 +71,8 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         })
     ],
     providers: [
-        { provide: LOCALE_ID, useValue: 'zh-Hans' },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        //{ provide: LOCALE_ID, useValue: 'zh-Hans' }, 
+        { provide: LOCALE_ID, useFactory: getCurrentLanguage },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         ABP_HTTP_PROVIDER,
         { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
@@ -75,7 +80,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         {
             provide: APP_INITIALIZER,
             useFactory: StartupServiceFactory,
-            deps: [StartupService],
+            deps: [Injector, StartupService],
             multi: true
         }
     ],

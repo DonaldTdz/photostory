@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { getRule, saveRule, removeRule } from '../../../../_mock/rule.service';
+
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
     selector: 'app-page-users',
     templateUrl: './users.component.html'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent extends AppComponentBase implements OnInit {
     q: any = {
         pi: 1,
         ps: 10,
@@ -32,7 +34,9 @@ export class UsersComponent implements OnInit {
     modalVisible = false;
     description = '';
 
-    constructor(public msg: NzMessageService) {}
+    constructor(injector: Injector, public msg: NzMessageService) {
+        super(injector);
+    }
 
     ngOnInit() {
         this.getData();

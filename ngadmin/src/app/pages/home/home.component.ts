@@ -1,14 +1,18 @@
 import { NzMessageService } from 'ng-zorro-antd';
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { getFakeChartData } from '../../../../_mock/chart.service';
+
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
     selector: 'app-page-home',
     templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent extends AppComponentBase {
 
-    constructor(public msg: NzMessageService) {}
+    constructor(injector: Injector, public msg: NzMessageService) {
+        super(injector);
+    }
 
     todoData: any[] = [
         { completed: true, avatar: '1', name: '苏先生', content: `请告诉我，我应该说点什么好？` },

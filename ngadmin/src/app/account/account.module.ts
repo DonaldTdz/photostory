@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 //import { ModalModule } from 'ngx-bootstrap';
 
-//import { AbpModule } from '@abp/abp.module';
+import { AbpModule } from '@abp/abp.module';
 
 import { AccountRoutingModule } from './account.routing.module';
 
-//import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
+import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 
 import { SharedModule } from '@shared/shared.module';
 
@@ -19,7 +19,7 @@ import { LoginComponent } from './login/login.component';
 //import { RegisterComponent } from './register/register.component';
 //import { AccountLanguagesComponent } from './layout/account-languages.component';
 
-//import { LoginService } from './login/login.service';
+import { LoginService } from './login/login.service';
 
 @NgModule({
     imports: [
@@ -27,9 +27,9 @@ import { LoginComponent } from './login/login.component';
         FormsModule,
         HttpModule,
         JsonpModule,
-        //AbpModule,
+        AbpModule,
         SharedModule,
-        //ServiceProxyModule,
+        ServiceProxyModule,
         AccountRoutingModule//,
         //ModalModule.forRoot()
     ],
@@ -42,7 +42,7 @@ import { LoginComponent } from './login/login.component';
         //AccountLanguagesComponent
     ],
     providers: [
-        //LoginService
+        LoginService
     ]
 })
 export class AccountModule {

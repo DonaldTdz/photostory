@@ -1,11 +1,13 @@
 import { NzMessageService } from 'ng-zorro-antd';
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
+
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
     selector: 'app-page-about',
     templateUrl: './about.component.html'
 })
-export class AboutComponent {
+export class AboutComponent extends AppComponentBase {
     type = '';
     q = '';
 
@@ -18,5 +20,7 @@ export class AboutComponent {
         this.msg.success(`搜索：${this.q}`);
     }
 
-    constructor(public msg: NzMessageService) {}
+    constructor(injector: Injector, public msg: NzMessageService) {
+        super(injector);
+    }
 }
