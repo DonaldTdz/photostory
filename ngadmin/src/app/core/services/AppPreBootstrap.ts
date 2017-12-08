@@ -25,7 +25,8 @@ export class AppPreBootstrap {
         }).done(result => {
             AppConsts.appBaseUrl = result.appBaseUrl;
             AppConsts.remoteServiceBaseUrl = result.remoteServiceBaseUrl;
-            
+            //alert(1111)
+            //alert(AppConsts.appBaseUrl)
             callback();
         });
     }

@@ -47,7 +47,7 @@ export class LoginComponent extends AppComponentBase {
     if (this.valForm.valid) {
       console.log('Valid!');
       console.log(this.valForm.value);
-      this.router.navigate(['/pages/home']);
+      this.router.navigate(['pages/home']);
     }
   }
 }
