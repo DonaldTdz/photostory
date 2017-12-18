@@ -71,8 +71,7 @@ export function getCurrentLanguage(): string {
         })
     ],
     providers: [
-        //{ provide: LOCALE_ID, useValue: 'zh-Hans' }, 
-        { provide: LOCALE_ID, useFactory: getCurrentLanguage },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        //{ provide: LOCALE_ID, useValue: 'zh-Hans' },                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
         ABP_HTTP_PROVIDER,
         { provide: API_BASE_URL, useFactory: getRemoteServiceBaseUrl },
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
@@ -82,7 +81,8 @@ export function getCurrentLanguage(): string {
             useFactory: StartupServiceFactory,
             deps: [Injector, StartupService],
             multi: true
-        }
+        },
+        { provide: LOCALE_ID, useFactory: getCurrentLanguage }
     ],
     bootstrap: [AppComponent]
 })
