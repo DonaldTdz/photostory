@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { getRule, saveRule, removeRule } from '../../../../_mock/rule.service';
+import { UserServiceProxy, UserDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
 
 import { AppComponentBase } from '@shared/app-component-base';
 
@@ -11,12 +12,13 @@ import { AppComponentBase } from '@shared/app-component-base';
 export class UsersComponent extends AppComponentBase implements OnInit {
     q: any = {
         pi: 1,
-        ps: 10,
+        ps: 4,
+        total: 0,
         sorter: '',
         status: -1,
         statusList: []
     };
-    data: any[] = [];
+    data: UserDto[] = [];
     loading = false;
     selectedRows: any[] = [];
     curRows: any[] = [];
@@ -24,37 +26,22 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     allChecked = false;
     indeterminate = false;
     status = [
-        { text: '关闭', value: false, type: 'default' },
-        { text: '运行中', value: false, type: 'processing' },
-        { text: '已上线', value: false, type: 'success' },
-        { text: '异常', value: false, type: 'error' }
+        { text: '启用', value: false, type: 'success' },
+        { text: '禁用', value: false, type: 'default' }
     ];
     sortMap: any = {};
     expandForm = false;
     modalVisible = false;
     description = '';
 
-    constructor(injector: Injector, public msg: NzMessageService) {
+    constructor(injector: Injector, public msg: NzMessageService, private _userService: UserServiceProxy) {
         super(injector);
     }
 
     ngOnInit() {
-        this.getData();
+        this.refreshData();
     }
 
-    getData() {
-        this.pageChange(1).then(() => {
-            this.q.statusList = this.status.map((i, index) => i.value ? index : -1).filter(w => w !== -1);
-            if (this.q.status && this.q.status > -1) this.q.statusList.push(this.q.status);
-            console.log(this.q);
-            this.data = getRule(this.q).map(i => {
-                const statusItem = this.status[i.status];
-                i.statusText = statusItem.text;
-                i.statusType = statusItem.type;
-                return i;
-            });
-        });
-    }
 
     add() {
         this.modalVisible = true;
@@ -64,18 +51,14 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     save() {
         this.loading = true;
         saveRule(this.description);
-        this.getData();
+        this.refreshData();
         setTimeout(() => this.modalVisible = false, 500);
     }
 
     remove() {
         this.selectedRows.forEach(i => removeRule(i.no));
-        this.getData();
+        this.refreshData();
         this.clear();
-    }
-
-    approval() {
-        this.msg.success(`审批了 ${this.selectedRows.length} 笔`);
     }
 
     clear() {
@@ -105,7 +88,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
         this.sortMap = {};
         this.sortMap[field] = value;
         this.q.sorter = value ? `${field}_${value}` : '';
-        this.getData();
+        this.refreshData();
     }
 
     dataChange(res: any) {
@@ -113,19 +96,31 @@ export class UsersComponent extends AppComponentBase implements OnInit {
         this.refreshStatus();
     }
 
-    pageChange(pi: number): Promise<any> {
-        this.q.pi = pi;
+    refreshData(reset = false) {
+        if (reset) {
+          this.q.pi = 1;
+        }
         this.loading = true;
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                this.loading = false;
-                resolve();
-            }, 500);
-        });
-    }
-
+        this._userService.getAll((this.q.pi - 1)*this.q.ps, this.q.ps).subscribe((result: PagedResultDtoOfUserDto) => {
+          this.loading = false;
+          let status = 0;
+          this.data = result.items.map(i => {  
+                  if(i.isActive) {
+                      status = 0;
+                  } else {
+                      status = 1;
+                  }
+                  const statusItem = this.status[status];
+                  i.activeText = statusItem.text;
+                  i.activeType = statusItem.type;
+                  return i;
+              });
+          this.q.total = result.totalCount;
+        })
+      };
+      
     reset(ls: any[]) {
         for (const item of ls) item.value = false;
-        this.getData();
+        this.refreshData();
     }
 }

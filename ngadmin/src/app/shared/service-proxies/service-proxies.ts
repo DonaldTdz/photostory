@@ -2618,6 +2618,9 @@ export class UserDto implements IUserDto {
     creationTime: moment.Moment;
     roleNames: string[];
     id: number;
+    activeType: string;
+    activeText: string;
+    checked: boolean;
 
     constructor(data?: IUserDto) {
         if (data) {

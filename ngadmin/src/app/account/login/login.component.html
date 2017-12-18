@@ -2,7 +2,7 @@
     <div #cardBody class="abs-center mt-lg width-lg">
         <nz-card [nzTitle]="nzTitle" [nzBordered]="false" class="ant-card__primary ant-card__title-img">
             <ng-template #nzTitle>
-                <div class="text-center" style="color:white; font-weight:bold;"><img src="./assets/images/logo.svg" style="height:20px;"> {{l("LogIn")}}</div>
+                <div class="text-center" style="color:white; font-weight:bold;"><img src="./assets/img/logo.svg" style="height:20px;"> {{l("LogIn")}}</div>
             </ng-template>
             <form nz-form [formGroup]="valForm" #loginForm="ngForm" id="LoginForm" (ngSubmit)="login()" role="form">
                 <div nz-form-item>
