@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from '@core/services/settings.service';
 import { AppComponentBase } from '@shared/app-component-base';
 
-import { LoginService } from '../login/login.service';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-pages-login',
@@ -38,16 +38,5 @@ export class LoginComponent extends AppComponentBase {
      );
    }
  }
-
-  submit() {
-    // tslint:disable-next-line:forin
-    for (const i in this.valForm.controls) {
-      this.valForm.controls[i].markAsDirty();
-    }
-    if (this.valForm.valid) {
-      console.log('Valid!');
-      console.log(this.valForm.value);
-      this.router.navigate(['pages/home']);
-    }
-  }
+ 
 }

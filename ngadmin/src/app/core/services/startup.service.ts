@@ -6,9 +6,9 @@ import { TranslatorService } from '../translator/translator.service';
 import { SettingsService } from './settings.service';
 import { ACLService } from '../acl/acl.service';
 import { TitleService } from '@core/services/title.service';
-import { AppSessionService } from '@shared/session/app-session.service';
+//import { AppSessionService } from '@shared/session/app-session.service';
 
-import { AppPreBootstrap } from './AppPreBootstrap';
+//import { AppPreBootstrap } from './AppPreBootstrap';
 
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toPromise';
@@ -28,11 +28,12 @@ export class StartupService {
         private httpClient: HttpClient,
         private injector: Injector) { }
 
-    load(): Promise<any> {
+    load(resolve, reject)//: Promise<any> 
+    {
         // only works with promises
         // https://github.com/angular/angular/issues/15088
-        return new Promise((resolve, reject) => {
-            AppPreBootstrap.run(() => {
+        //return new Promise((resolve, reject) => {
+            /*AppPreBootstrap.run(() => {
                 var appSessionService: AppSessionService = this.injector.get(AppSessionService);
                 appSessionService.init().then(
                   (result) => {
@@ -42,7 +43,7 @@ export class StartupService {
                     reject(err);
                   }
                 );
-            });
+            });*/
             
             this.httpClient.get('assets/abp-data.json')
                            .subscribe((res: any) => {
@@ -61,6 +62,6 @@ export class StartupService {
                             }, (err: HttpErrorResponse) => {
                                 resolve(null);
                             });
-        });
+        //});
     }
 }

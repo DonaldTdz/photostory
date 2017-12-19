@@ -1,10 +1,10 @@
-<div class="wrapper">
+<div class="wrapper" [@routerTransition] >
     <div #cardBody class="abs-center mt-lg width-lg">
         <nz-card [nzTitle]="nzTitle" [nzBordered]="false" class="ant-card__primary ant-card__title-img">
             <ng-template #nzTitle>
                 <div class="text-center" style="color:white; font-weight:bold;"><img src="./assets/img/logo.svg" style="height:20px;"> {{l("LogIn")}}</div>
             </ng-template>
-            <form nz-form [formGroup]="valForm" #loginForm="ngForm" id="LoginForm" (ngSubmit)="login()" role="form">
+            <form nz-form [formGroup]="valForm" #loginForm="ngForm" method="post" id="LoginForm" (ngSubmit)="login()" role="form">
                 <div nz-form-item>
                     <div nz-form-control [nzValidateStatus]="valForm.controls.userNameOrEmailAddress">
                         <nz-input formControlName="userNameOrEmailAddress" [nzPlaceHolder]="l('UserNameOrEmail')" [(ngModel)]="loginService.authenticateModel.userNameOrEmailAddress" [nzSize]="'large'">
@@ -37,7 +37,7 @@
                 </div>
                 <div nz-form-item nz-row>
                     <div nz-col [nzSpan]="24">
-                        <button nz-button id="LoginButton" [disabled]="!valForm.valid" [nzType]="'primary'" [nzSize]="'large'" class="ant-btn__block">
+                        <button nz-button id="LoginButton" type="submit" [disabled]="!valForm.valid" [nzType]="'primary'" [nzSize]="'large'" class="ant-btn__block">
                             <span>登录</span>
                         </button>
                     </div>

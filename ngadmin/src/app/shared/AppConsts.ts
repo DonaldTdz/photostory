@@ -8,7 +8,7 @@ export class AppConsts {
         };
     
         static readonly localization = {
-            defaultLocalizationSourceName: 'photostory'
+            defaultLocalizationSourceName: 'saas'
         };
     
         static readonly authorization = {

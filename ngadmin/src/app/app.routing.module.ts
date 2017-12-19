@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'pages', pathMatch: 'full' },
+    { path: '', redirectTo: 'pages/home', pathMatch: 'full' },
     {
         path: 'account',
         loadChildren: './account/account.module#AccountModule', //Lazy load account module
@@ -13,8 +13,8 @@ const routes: Routes = [
         path: 'pages',   //component: LayoutComponent,
         loadChildren: './pages/pages.module#PagesModule', //Lazy load account module
         data: { preload: true }
-    },
-    { path: '**', redirectTo: 'pages' }
+    }//,
+    //{ path: '**', redirectTo: 'pages' }
 ];
 
 @NgModule({

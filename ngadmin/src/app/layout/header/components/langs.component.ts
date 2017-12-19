@@ -35,8 +35,8 @@ export class HeaderLangsComponent extends AppComponentBase {
     change(lang: string) {
         this.tsServ.use(lang, false);
         this.settings.setLayout('lang', lang);
-        alert(lang)
-        alert(this.localization.currentLanguage.name)
+        //alert(lang)
+        //alert(this.localization.currentLanguage.name)
         abp.utils.setCookieValue(
             "Abp.Localization.CultureName",
             lang,
@@ -44,9 +44,9 @@ export class HeaderLangsComponent extends AppComponentBase {
             abp.appPath
           );
       
-          //location.reload(false);
+          location.reload();
 
-          alert(this.localization.currentLanguage.name)
+          //alert(this.localization.currentLanguage.name)
     }
 
 }

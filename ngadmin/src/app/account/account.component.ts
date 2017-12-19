@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from '@angular/core';
-//import { LoginService } from './login/login.service';
-//import { AppComponentBase } from '@shared/app-component-base';
+import { LoginService } from './login/login.service';
+import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({
     templateUrl: './account.component.html'//,
@@ -9,7 +9,7 @@ import { Component, ViewContainerRef, OnInit, ViewEncapsulation, Injector } from
     //],
     //encapsulation: ViewEncapsulation.None
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent extends AppComponentBase implements OnInit {
 
     private viewContainerRef: ViewContainerRef;
 
@@ -17,18 +17,18 @@ export class AccountComponent implements OnInit {
     currentYear: number;
 
     public constructor(
-        injector: Injector//,
-        //private _loginService: LoginService
+        injector: Injector,
+        private _loginService: LoginService
     ) {
-        //super(injector);
+        super(injector);
 
         this.currentYear = new Date().getFullYear();
-        //this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.format('YYYYDDMM') + ']';
+        this.versionText = this.appSession.application.version + ' [' + this.appSession.application.releaseDate.format('YYYYDDMM') + ']';
     }
 
-    //showTenantChange(): boolean {
-        //return abp.multiTenancy.isEnabled;
-    //}
+    showTenantChange(): boolean {
+        return abp.multiTenancy.isEnabled;
+    }
 
     ngOnInit(): void {
         //$('body').attr('class', 'login-page');
