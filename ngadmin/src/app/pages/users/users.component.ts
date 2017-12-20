@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { getRule, saveRule, removeRule } from '../../../../_mock/rule.service';
 import { UserServiceProxy, UserDto, CreateUserDto, RoleDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
@@ -6,12 +6,16 @@ import { FormGroup, FormBuilder, Validators, FormControl, AsyncValidatorFn, Abst
 import { Observable } from 'rxjs/Observable';
 
 import { AppComponentBase } from '@shared/app-component-base';
+import { EditUserComponent } from "./edit-user/edit-user.component";
 
 @Component({
     selector: 'app-page-users',
     templateUrl: './users.component.html'
 })
 export class UsersComponent extends AppComponentBase implements OnInit {
+
+    @ViewChild('editUserModal') editUserModal: EditUserComponent;
+
     q: any = {
         pi: 1,
         ps: 10,
@@ -190,5 +194,9 @@ export class UsersComponent extends AppComponentBase implements OnInit {
 
     getFormControl(name: string) {
         return this.form.controls[name];
+    }
+
+    editUser(user: UserDto): void {
+        this.editUserModal.show(user.id);
     }
 }

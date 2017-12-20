@@ -9,6 +9,7 @@ import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { AboutComponent } from './about/about.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { AboutComponent } from './about/about.component';
         UsersComponent,
         RolesComponent,
         TenantsComponent,
-        AboutComponent
+        AboutComponent,
+        EditUserComponent
     ],
     exports: [
         //RouterModule

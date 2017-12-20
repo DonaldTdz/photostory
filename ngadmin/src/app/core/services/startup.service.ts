@@ -6,6 +6,7 @@ import { TranslatorService } from '../translator/translator.service';
 import { SettingsService } from './settings.service';
 import { ACLService } from '../acl/acl.service';
 import { TitleService } from '@core/services/title.service';
+//import { ThemeType, ThemesService } from '@core/services/themes.service';
 //import { AppSessionService } from '@shared/session/app-session.service';
 
 //import { AppPreBootstrap } from './AppPreBootstrap';
@@ -26,6 +27,7 @@ export class StartupService {
         private aclService: ACLService,
         private titleService: TitleService,
         private httpClient: HttpClient,
+        //private themeServ: ThemesService,
         private injector: Injector) { }
 
     load(resolve, reject)//: Promise<any> 
@@ -49,6 +51,9 @@ export class StartupService {
                            .subscribe((res: any) => {
                                 this.settingService.setApp(res.app);
                                 this.settingService.setUser(res.user);
+                                //var theme: ThemeType = 'J';
+                                //this.themeServ.setTheme(theme);
+                                //this.settingService.setLayout('theme',theme);
                                 // 设置ＡＣＬ权限为全量
                                 this.aclService.setFull(true);
                                 // 初始化菜单

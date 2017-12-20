@@ -77,7 +77,7 @@
                     <nz-badge [nzStatus]="user.activeType" [nzText]="user.activeText"></nz-badge>
                 </td>
                 <td nz-td>
-                    <a (click)="msg.success('编辑' + user.id)">编辑</a>
+                    <a (click)="editUser(user)">编辑</a>
                     <span nz-table-divider></span>
                     <a (click)="msg.success('删除' + user.id)">删除</a>
                 </td>
@@ -85,7 +85,7 @@
         </tbody>
     </nz-table>
 </nz-card>
-<form nz-form [formGroup]="form" *ngIf="modalVisible" (ngSubmit)="save()">
+<form nz-form [formGroup]="form" *ngIf="modalVisible" id="frm_create_user" (ngSubmit)="save()">
     <nz-modal [nzVisible]="modalVisible" [nzTitle]="l('CreateNewUser')" [nzConfirmLoading]="loading" [nzContent]="modalContent"
         [nzFooter]="modalFooter" (nzOnCancel)="handleCancel($event)">
         <ng-template #modalContent>
@@ -181,3 +181,5 @@
         </ng-template>
     </nz-modal>
 </form>
+
+<edit-user-modal #editUserModal (modalSave)="refreshData()"></edit-user-modal>
