@@ -1,0 +1,25 @@
+@import "theme";
+
+.theme-l {
+    .dark-aside();
+    .header {
+        background-color: #3c8dbc;
+    }
+    .nav {
+        > li {
+            > a {
+                &:hover {
+                    color: lighten(#373d41, 20%);
+                }
+            }
+            // Selected
+            &.@{nav-prefix-cls}-item-selected {
+                border-left-color: #3c8dbc;
+                >a {
+                    color: lighten(#373d41, 20%);
+                }
+            }
+        }
+    }
+    .focusing-color-mixin(#3c8dbc);
+}

@@ -13,8 +13,8 @@ const routes: Routes = [
         path: 'pages',   //component: LayoutComponent,
         loadChildren: './pages/pages.module#PagesModule', //Lazy load account module
         data: { preload: true }
-    }//,
-    //{ path: '**', redirectTo: 'pages' }
+    },
+    { path: '**', redirectTo: 'pages' }
 ];
 
 @NgModule({

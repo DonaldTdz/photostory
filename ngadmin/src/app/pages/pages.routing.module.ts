@@ -12,12 +12,11 @@ import { TenantsComponent } from './tenants/tenants.component';
 import { AboutComponent } from './about/about.component';
 
 export const routes: Routes = [
-    //{ path: '', redirectTo: 'pages', pathMatch: 'full' },
     {
         path: '',
         component: LayoutComponent,
         children: [
-            //{ path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent, data: { translate: 'home' } ,  canActivate: [AppRouteGuard] },
             { path: 'users', component: UsersComponent, data: { translate: 'users', permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
             { path: 'roles', component: RolesComponent, data: { translate: 'roles', permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
@@ -25,17 +24,9 @@ export const routes: Routes = [
             { path: 'about', component: AboutComponent, data: { translate: 'about' } }
         ]
     }
-    /*,
-    {
-        path: 'account',
-        loadChildren: '../account/account.module#AccountModule', //Lazy load account module
-        data: { preload: true }
-    },
-    { path: '**', redirectTo: 'pages' }*/
 ];
 
 @NgModule({
-    //imports: [RouterModule.forRoot(routes, { useHash: true })],
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
     providers: []

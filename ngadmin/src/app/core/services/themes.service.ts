@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { SettingsService } from './settings.service';
 import { DOCUMENT } from '@angular/platform-browser';
 
-export type ThemeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J';
+export type ThemeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L';
 
 @Injectable()
 export class ThemesService {
