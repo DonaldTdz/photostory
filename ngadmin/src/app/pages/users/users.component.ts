@@ -2,10 +2,9 @@ import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { getRule, saveRule, removeRule } from '../../../../_mock/rule.service';
 import { UserServiceProxy, UserDto, CreateUserDto, RoleDto, PagedResultDtoOfUserDto } from '@shared/service-proxies/service-proxies';
-import { FormGroup, FormBuilder, Validators, FormControl, AsyncValidatorFn, AbstractControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 
 import { AppComponentBase } from '@shared/app-component-base';
+import { CreateUserComponent } from "./create-user/create-user.component";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 
 @Component({
@@ -15,6 +14,7 @@ import { EditUserComponent } from "./edit-user/edit-user.component";
 export class UsersComponent extends AppComponentBase implements OnInit {
 
     @ViewChild('editUserModal') editUserModal: EditUserComponent;
+    @ViewChild('createUserModal') createUserModal: CreateUserComponent;
 
     q: any = {
         pi: 1,
@@ -37,88 +37,17 @@ export class UsersComponent extends AppComponentBase implements OnInit {
     ];
     sortMap: any = {};
     expandForm = false;
-    modalVisible = false;
-    isConfirmLoading = false;
 
-    form: FormGroup;
-
-    user: CreateUserDto = null;
-    //roles: RoleDto[] = null;
-    roles: any = [];
-
-    constructor(injector: Injector,private fb: FormBuilder, public msg: NzMessageService, private _userService: UserServiceProxy) {
+    constructor(injector: Injector, public msg: NzMessageService, private _userService: UserServiceProxy) {
         super(injector);
     }
 
     ngOnInit() {
         this.refreshData();
-
-        this._userService.getRoles()
-        .subscribe((result) => {
-            this.roles = result.items.map(i => { return { label: i.name, value: i.normalizedName, checked: true }; });
-        });
-
-        this.form = this.fb.group({
-            email: [null, [Validators.email]],
-            password: [null, [Validators.required]],
-            checkPassword: [null, Validators.compose([Validators.required, this.confirmationValidator])],
-            //username: [null, Validators.compose([Validators.required, Validators.minLength(2)]), this.nicknameValidator.bind(this)],
-            username: [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(32)])],
-            name: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
-            surname: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
-            isactive: [true],
-            rolegroup: [true]
-        }, );
     }
 
-
-    add() {
-        this.user = new CreateUserDto();
-        this.user.init({ isActive: true });
-        this.roles.forEach(element => {
-            element.checked = true;
-        });
-        this.modalVisible = true;
-    }
-
-    save() {
-        for (const i in this.form.controls) {
-            this.form.controls[i].markAsDirty();
-        }
-        console.log('log', this.form.value);
-        if (this.form.valid) {
-            this.loading = true;
-            this.isConfirmLoading = true;
-            var roles = [];
-            this.roles.forEach((role) => {
-                if(role.checked){
-                    roles.push(role.value);
-                }
-            });
-        
-            this.user.roleNames = roles;
-            this._userService.create(this.user)
-                .finally(() => { this.isConfirmLoading = false; })
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    //this.msg.success('Successed!');
-                    this.modalVisible = false;
-                    this.refreshData();
-                    this.loading = false;
-                });
-
-        } 
-    }
-
-    handleCancel = (e) => {
-        this.modalVisible = false;
-        this.isConfirmLoading = false;
-        this.loading = false;
-        e.preventDefault();
-        this.form.reset();
-        for (const key in this.form.controls) {
-          this.form.controls[key].markAsPristine();
-        }
+    adduser() {
+        this.createUserModal.show();
     }
 
     remove() {
@@ -171,31 +100,7 @@ export class UsersComponent extends AppComponentBase implements OnInit {
         this.refreshData();
     }
 
-    nicknameValidator = (control: FormControl): Observable<any>  => {
-        return control
-                .valueChanges
-                .debounceTime(500)
-                .map((value) => {
-                    if (value !== 'cipchk') {
-                        control.setErrors({ checked: true, error: true });
-                        return ;
-                    }
-                    control.setErrors(null);
-                });
-    }
-
-    confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-        if (!control.value) {
-            return { required: true };
-        } else if (control.value !== this.form.controls['password'].value) {
-            return { confirm: true, error: true };
-        }
-    }
-
-    getFormControl(name: string) {
-        return this.form.controls[name];
-    }
-
+   
     editUser(user: UserDto): void {
         this.editUserModal.show(user.id);
     }

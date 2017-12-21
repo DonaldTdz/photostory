@@ -1,4 +1,4 @@
-import { Component, ViewChild, Injector, Output, EventEmitter, ElementRef  } from '@angular/core';
+import { Component, ViewChild, Injector, Output, EventEmitter, OnInit } from '@angular/core';
 import { UserServiceProxy, UserDto, RoleDto } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/app-component-base';
 import { FormGroup, FormBuilder, Validators, FormControl, AsyncValidatorFn, AbstractControl } from '@angular/forms';
@@ -9,17 +9,17 @@ import * as _ from "lodash";
     selector: 'edit-user-modal',
     templateUrl: './edit-user.component.html'
 })
-export class EditUserComponent extends AppComponentBase {
+export class EditUserComponent extends AppComponentBase implements OnInit {
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
 
-    active: boolean = false;
     modalVisible: boolean = false;
     user: UserDto = null;
-    //roles: RoleDto[] = null;
+    userRoles: RoleDto[] = null;
     roles: any = [];
     isConfirmLoading = false;
     form: FormGroup;
+    loading = false;
 
     constructor(
         injector: Injector,
@@ -27,6 +27,26 @@ export class EditUserComponent extends AppComponentBase {
         private _userService: UserServiceProxy
     ) {
         super(injector);
+    }
+
+    ngOnInit(): void {
+
+        this.user = new UserDto();
+        this.user.init({ isActive: true });
+        this._userService.getRoles()
+            .subscribe((result) => {
+                this.userRoles = result.items;
+                this.roles = this.userRoles.map(i => { return { label: i.name, value: i.normalizedName, checked: true }; });
+            });
+
+        this.form = this.fb.group({
+            email: [null, [Validators.email]],
+            username: [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(32)])],
+            name: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
+            surname: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
+            isactive: [true],
+            editrolegroup: [true]
+        }, );
     }
 
     userInRole(role: RoleDto, user: UserDto): boolean {
@@ -39,67 +59,59 @@ export class EditUserComponent extends AppComponentBase {
     }
 
     show(id: number): void {
-       
+
+        this.modalVisible = true;
+        this.loading = true;
         //用户
         this._userService.get(id)
             .subscribe(
             (result) => {
                 this.user = result;
-                this.modalVisible = true;
-                this.active = true;
                 //角色
-                this._userService.getRoles()
-                .subscribe((result) => {
-                    this.roles = result.items.map(i => { return { label: i.name, value: i.normalizedName, checked: this.userInRole(i, this.user) }; });
-                });
+                this.roles = this.userRoles.map(i => { return { label: i.name, value: i.normalizedName, checked: this.userInRole(i, this.user) }; });
+                this.loading = false;
             });
-        
-            this.form = this.fb.group({
-                email: [null, [Validators.email]],
-                username: [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(32)])],
-                name: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
-                surname: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
-                isactive: [true],
-                editrolegroup: [true]
-            }, );
     }
 
     handleCancel = (e) => {
-        this.active = false;
         this.modalVisible = false;
         this.isConfirmLoading = false;
         e.preventDefault();
         this.form.reset();
         for (const key in this.form.controls) {
-          this.form.controls[key].markAsPristine();
+            this.form.controls[key].markAsPristine();
         }
     }
 
     save(): void {
+        for (const i in this.form.controls) {
+            this.form.controls[i].markAsDirty();
+        }
+        console.log('log', this.form.value);
+        if (this.form.valid) {
+            this.isConfirmLoading = true;
 
-        this.isConfirmLoading = true;
+            var roles = [];
 
-        var roles = [];
-        
-        this.roles.forEach((role) => {
-            if(role.checked){
-                roles.push(role.value);
-            }
-        });
-
-        this.user.roleNames = roles;
-
-        this._userService.update(this.user)
-            .finally(() => { this.isConfirmLoading = false; })
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.close();
-                this.modalSave.emit(null);
+            this.roles.forEach((role) => {
+                if (role.checked) {
+                    roles.push(role.value);
+                }
             });
+
+            this.user.roleNames = roles;
+
+            this._userService.update(this.user)
+                .finally(() => { this.isConfirmLoading = false; })
+                .subscribe(() => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.close();
+                    this.modalSave.emit(null);
+                });
+        }
     }
 
     close(): void {
-        this.active = false;
         this.modalVisible = false;
     }
 

@@ -1,6 +1,6 @@
-<form nz-form [formGroup]="form" *ngIf="modalVisible" id="frm_edit_user" (ngSubmit)="save()">
-    <nz-modal [nzVisible]="modalVisible" [nzTitle]="l('EditUser')" [nzConfirmLoading]="loading" [nzContent]="modalContent" [nzFooter]="modalFooter"
-        (nzOnCancel)="handleCancel($event)">
+<form nz-form [formGroup]="form" *ngIf="modalVisible" id="frm_create_user" (ngSubmit)="save()">
+    <nz-modal [nzVisible]="modalVisible" [nzTitle]="l('CreateNewUser')" [nzConfirmLoading]="loading" [nzContent]="modalContent"
+        [nzFooter]="modalFooter" (nzOnCancel)="handleCancel($event)">
         <ng-template #modalContent>
             <nz-tabset>
                 <nz-tab>
@@ -47,6 +47,25 @@
                             </div>
                         </div>
                         <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="4">
+                                <label for="password" nz-form-item-required>{{l("Password")}}</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="20" nzHasFeedback [nzValidateStatus]="getFormControl('password')">
+                                <nz-input formControlName="password" [(ngModel)]="user.password" [nzType]="'password'" [nzId]="'password'"></nz-input>
+                                <div nz-form-explain *ngIf="getFormControl('password').dirty&&getFormControl('password').hasError('required')">请输入密码</div>
+                            </div>
+                        </div>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSm]="4">
+                                <label for="checkPassword" nz-form-item-required>确认密码</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSm]="20" nzHasFeedback [nzValidateStatus]="getFormControl('checkPassword')">
+                                <nz-input formControlName="checkPassword" [(ngModel)]="user.confirmPassword" [nzType]="'password'" [nzId]="'checkPassword'"></nz-input>
+                                <div nz-form-explain *ngIf="getFormControl('checkPassword').dirty&&getFormControl('checkPassword').hasError('required')">请确认密码</div>
+                                <div nz-form-explain *ngIf="getFormControl('checkPassword').dirty&&getFormControl('checkPassword').hasError('confirm')">两次输入的密码必须一致</div>
+                            </div>
+                        </div>
+                        <div nz-form-item nz-row>
                             <div nz-form-control nz-col [nzSpan]="20" [nzOffset]="4">
                                 <label nz-checkbox formControlName="isactive" [(ngModel)]="user.isActive">
                                     <span>{{l("IsActive")}}</span>
@@ -59,7 +78,7 @@
                     <ng-template #nzTabHeading>
                         用户角色
                     </ng-template>
-                    <label nz-checkbox formControlName="editrolegroup" *ngFor="let role of roles" [(ngModel)]="role.checked">
+                    <label nz-checkbox formControlName="rolegroup" *ngFor="let role of roles" [(ngModel)]="role.checked">
                         <span>{{role.label}}</span>
                     </label>
                 </nz-tab>
