@@ -58,6 +58,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
 
     show(): void {
         //this.modal.show();
+        this.reset();
         this.user = new CreateUserDto();
         this.user.init({ isActive: true });
         this.roles.forEach(element => {
@@ -80,7 +81,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
             var roles = [];
 
             this.roles.forEach((role) => {
-                if(role.checked){
+                if (role.checked) {
                     roles.push(role.value);
                 }
             });
@@ -105,11 +106,7 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
     handleCancel = (e) => {
         this.modalVisible = false;
         this.isConfirmLoading = false;
-        e.preventDefault();
-        this.form.reset();
-        for (const key in this.form.controls) {
-          this.form.controls[key].markAsPristine();
-        }
+        this.reset(e);
     }
 
     nicknameValidator = (control: FormControl): Observable<any> => {
@@ -135,6 +132,16 @@ export class CreateUserComponent extends AppComponentBase implements OnInit {
 
     getFormControl(name: string) {
         return this.form.controls[name];
+    }
+
+    reset(e?): void {
+        if (e) {
+            e.preventDefault();
+        }
+        this.form.reset();
+        for (const key in this.form.controls) {
+            this.form.controls[key].markAsPristine();
+        }
     }
 
 }

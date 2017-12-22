@@ -44,8 +44,8 @@ export class EditUserComponent extends AppComponentBase implements OnInit {
             username: [null, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(32)])],
             name: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
             surname: [null, Validators.compose([Validators.required, Validators.maxLength(32)])],
-            isactive: [true],
-            editrolegroup: [true]
+            isactive: [null],
+            editrolegroup: [null]
         }, );
     }
 
@@ -58,8 +58,18 @@ export class EditUserComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    show(id: number): void {
+    userInRoles() {
+        this.roles.forEach(role => {
+            if (this.user.roleNames.indexOf(role.value) !== -1) {
+                role.checked = true;
+            }
+            else {
+                role.checked = false;
+            }
+        });
+    }
 
+    show(id: number): void {
         this.modalVisible = true;
         this.loading = true;
         //用户
@@ -68,7 +78,9 @@ export class EditUserComponent extends AppComponentBase implements OnInit {
             (result) => {
                 this.user = result;
                 //角色
-                this.roles = this.userRoles.map(i => { return { label: i.name, value: i.normalizedName, checked: this.userInRole(i, this.user) }; });
+                //this.roles = this.userRoles.map(i => { return { label: i.name, value: i.normalizedName, checked: this.userInRole(i, this.user) }; });
+                this.roles = this.userRoles.map(i => { return { label: i.name, value: i.normalizedName, checked: true }; });
+                this.userInRoles();
                 this.loading = false;
             });
     }
@@ -76,11 +88,7 @@ export class EditUserComponent extends AppComponentBase implements OnInit {
     handleCancel = (e) => {
         this.modalVisible = false;
         this.isConfirmLoading = false;
-        e.preventDefault();
-        this.form.reset();
-        for (const key in this.form.controls) {
-            this.form.controls[key].markAsPristine();
-        }
+        this.reset(e);
     }
 
     save(): void {
@@ -117,5 +125,15 @@ export class EditUserComponent extends AppComponentBase implements OnInit {
 
     getFormControl(name: string) {
         return this.form.controls[name];
+    }
+
+    reset(e): void {
+        if (e) {
+            e.preventDefault();
+        }
+        this.form.reset();
+        for (const key in this.form.controls) {
+            this.form.controls[key].markAsPristine();
+        }
     }
 }

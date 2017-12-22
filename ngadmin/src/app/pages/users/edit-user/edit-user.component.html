@@ -59,9 +59,10 @@
                     <ng-template #nzTabHeading>
                         用户角色
                     </ng-template>
-                    <label nz-checkbox formControlName="editrolegroup" *ngFor="let role of roles" [(ngModel)]="role.checked">
+                    <!-- <label nz-checkbox formControlName="editrolegroup" *ngFor="let role of roles" [(ngModel)]="role.checked">
                         <span>{{role.label}}</span>
-                    </label>
+                    </label> -->
+                    <nz-checkbox-group formControlName="editrolegroup" [(ngModel)]="roles" ></nz-checkbox-group>
                 </nz-tab>
             </nz-tabset>
         </ng-template>
