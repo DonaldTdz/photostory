@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component ,Injector, ElementRef, ViewChild} from '@angular/core';
+import { Component, Injector, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SettingsService } from '@core/services/settings.service';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -29,14 +29,16 @@ export class LoginComponent extends AppComponentBase {
   login(): void {
     // tslint:disable-next-line:forin
     for (const i in this.valForm.controls) {
-     this.valForm.controls[i].markAsDirty();
-   }
-   if (this.valForm.valid) {
-     this.submitting = true;
-     this.loginService.authenticate(
-       () => this.submitting = false
-     );
-   }
- }
- 
+      this.valForm.controls[i].markAsDirty();
+    }
+    if (this.valForm.valid) {
+      this.submitting = true;
+      this.loginService.authenticate(
+        () => {
+          this.submitting = false;
+        }
+      );
+    }
+  }
+
 }

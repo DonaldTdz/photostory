@@ -6,21 +6,21 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 
 @Component({
-  selector   : 'app-sidebar',
+  selector: 'app-sidebar',
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent extends AppComponentBase implements OnInit {
-    constructor( injector: Injector, public settings: SettingsService, public msgSrv: NzMessageService, private _authService: AppAuthService) {
-      super(injector);
-    }
+  constructor(injector: Injector, public settings: SettingsService, public msgSrv: NzMessageService, private _authService: AppAuthService) {
+    super(injector);
+  }
 
-    ngOnInit() {
-      let user = { name: this.appSession.getShownLoginName(), email: this.appSession.user.emailAddress };
-      this.settings.setUser(user);
-      //this.shownLoginName = this.appSession.getShownLoginName();
-    }
+  ngOnInit() {
+    let user = { name: this.appSession.getShownLoginName(), email: this.appSession.user.emailAddress };
+    this.settings.setUser(user);
+    //this.shownLoginName = this.appSession.getShownLoginName();
+  }
 
-    logout(): void {
-      this._authService.logout();
+  logout(): void {
+    this._authService.logout();
   }
 }
