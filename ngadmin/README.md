@@ -2,6 +2,7 @@
 # 后台框架：ABP
 # 前端框架：ng-alain 基于阿里云 angular2 框架 ng-Zorro
 
+博客介绍：http://www.cnblogs.com/donaldtdz/p/8098948.html#3934073
 ABP资料说明： https://aspnetboilerplate.com/
 
 [Ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd) admin panel front-end framework.
